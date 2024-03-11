@@ -1,7 +1,7 @@
-﻿using BookingSystem.Server.Classes;
+﻿using BookingSystem.Core.Classes;
 using MongoDB.Bson;
 
-namespace BookingSystem.Server.Entities;
+namespace BookingSystem.Core.Entities;
 
 public class Restaurant : EntityBase
 {

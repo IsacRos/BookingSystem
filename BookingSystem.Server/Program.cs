@@ -1,7 +1,7 @@
-using BookingSystem.Server.Data;
-using BookingSystem.Server.Entities;
-using BookingSystem.Server.Mappers;
-using BookingSystem.Server.Services;
+using BookingSystem.Infrastructure.Data;
+using BookingSystem.Core.Entities;
+using BookingSystem.Core.Mappers;
+using BookingSystem.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
-//builder.Services.AddScoped<ITableService, TableService>();
+builder.Services.AddScoped<ITableService, TableService>();
 builder.Services.AddScoped<IRestaurantMapper, RestaurantMapper>();
 builder.Services.AddScoped<MongoConnection>();
 builder.Services.AddScoped(typeof(MongoDb<>));

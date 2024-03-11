@@ -1,4 +1,4 @@
-﻿namespace BookingSystem.Server.Enums
+﻿namespace BookingSystem.Core.Enums
 {
     public enum Collections
     {

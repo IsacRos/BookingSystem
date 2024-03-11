@@ -1,8 +1,8 @@
-﻿using BookingSystem.Server.Classes;
-using BookingSystem.Server.Entities;
+﻿using BookingSystem.Core.Classes;
+using BookingSystem.Core.Entities;
 using MongoDB.Bson;
 
-namespace BookingSystem.Server.DTOs;
+namespace BookingSystem.Core.DTOs;
 
 public class RestaurantDto
 {

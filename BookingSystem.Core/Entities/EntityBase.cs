@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson;
 
-namespace BookingSystem.Server.Entities
+namespace BookingSystem.Core.Entities
 {
     public abstract class EntityBase
     {

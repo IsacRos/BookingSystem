@@ -1,4 +1,4 @@
-﻿namespace BookingSystem.Server.Classes
+﻿namespace BookingSystem.Core.Classes
 {
     public class Address
     {

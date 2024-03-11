@@ -1,6 +1,6 @@
-﻿using BookingSystem.Server.Classes;
-using BookingSystem.Server.DTOs;
-using BookingSystem.Server.Services;
+﻿using BookingSystem.Core.Classes;
+using BookingSystem.Core.DTOs;
+using BookingSystem.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Server.Controllers
@@ -27,6 +27,19 @@ namespace BookingSystem.Server.Controllers
         {
             await _tableService.AddTable(id, capacity);
             return Ok();
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteTable(string restaurantId, string tableId)
+        {
+            try
+            {
+                await _tableService.DeleteTable(restaurantId, tableId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

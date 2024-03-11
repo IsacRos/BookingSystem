@@ -1,7 +1,7 @@
-﻿using BookingSystem.Server.DTOs;
-using BookingSystem.Server.Entities;
+﻿using BookingSystem.Core.DTOs;
+using BookingSystem.Core.Entities;
 
-namespace BookingSystem.Server.Mappers
+namespace BookingSystem.Core.Mappers
 {
     public interface IRestaurantMapper
     {
@@ -34,9 +34,9 @@ namespace BookingSystem.Server.Mappers
         {
             return new Restaurant
             {
-                Name = request.Name,
-                Address = request.Address,
-                PhoneNumber = request.PhoneNumber,
+                Name = request.Name!,
+                Address = request.Address!,
+                PhoneNumber = request.PhoneNumber!,
             };
         }
     }

@@ -1,6 +1,6 @@
-﻿using BookingSystem.Server.Entities;
-using BookingSystem.Server.DTOs;
-using BookingSystem.Server.Services;
+﻿using BookingSystem.Core.Entities;
+using BookingSystem.Core.DTOs;
+using BookingSystem.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Server.Controllers
@@ -35,19 +35,19 @@ namespace BookingSystem.Server.Controllers
             return Ok(restaurants);
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Update(RestaurantRequest request, string id)
+        {
+            await _restaurantService.UpdateRestaurant(request, id);
+            return Ok();
+        }
 
-       /* [HttpDelete]
+        [HttpDelete]
         public async Task<ActionResult> Delete(string id)
         {
             await _restaurantService.DeleteRestaurant(id);
             return Ok();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update(RestaurantRequest request, string id)
-        {
-            await _restaurantService.EditRestaurant(request, id);
-            return Ok();
-        }*/
     }
 }
