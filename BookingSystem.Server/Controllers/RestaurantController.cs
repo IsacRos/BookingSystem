@@ -2,6 +2,7 @@
 using BookingSystem.Core.DTOs;
 using BookingSystem.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookingSystem.Server.Controllers
 {
@@ -22,7 +23,7 @@ namespace BookingSystem.Server.Controllers
             await _restaurantService.AddRestaurant(request);
             return Ok();
         }
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllRestaurants()
         {
             var restaurants = await _restaurantService.GetAllRestaurants();

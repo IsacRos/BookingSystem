@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="AspNetCore.Identity.MongoDbCore" Version="3.1.2" />
+	<PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.4" />
 	<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
+	  <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.2" />
     <Compile Remove="Enums\Collections.cs" />
   </ItemGroup>
 
