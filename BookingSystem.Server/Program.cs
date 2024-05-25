@@ -1,28 +1,24 @@
-using BookingSystem.Infrastructure.Data;
 using BookingSystem.Core.Entities;
+using BookingSystem.Core.Interfaces;
 using BookingSystem.Core.Mappers;
+using BookingSystem.Core.Services;
+using BookingSystem.Infrastructure.Data;
 using BookingSystem.Infrastructure.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
-using MongoDbGenericRepository;
-using Microsoft.OpenApi.Models;
-using System.Net;
-using Swashbuckle.AspNetCore.Filters;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using SendGrid;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("BookingSystemServerContextConnection") ?? throw new InvalidOperationException("Connection string 'BookingSystemServerContextConnection' not found.");
-
-//builder.Services.AddDbContext<BookingSystemServerContext>(options => options.UseSqlServer(connectionString));
-
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<BookingSystemServerContext>();
 
 builder.Services.AddAuthorization();
 
 var mongoDbSettings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
-builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
-    .AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(mongoDbSettings!.AtlasURI, mongoDbSettings!.DatabaseName);
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>(o =>
+{
+    o.ClaimsIdentity.UserNameClaimType = "string";
+}).AddMongoDbStores<ApplicationUser, ApplicationRole, Guid>(mongoDbSettings!.AtlasURI, mongoDbSettings!.DatabaseName);
+
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -37,6 +33,13 @@ builder.Services.Configure<IdentityOptions>(options =>
     };
 });
 
+builder.Services.AddCors(o =>
+{
+    o.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+});
 
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
@@ -46,9 +49,11 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<ITableService, TableService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IRestaurantMapper, RestaurantMapper>();
+builder.Services.AddScoped<IBookingMapper, BookingMapper>();
 builder.Services.AddScoped<MongoConnection>();
-builder.Services.AddScoped(typeof(MongoDb<>));
+builder.Services.AddScoped(typeof(IMongoDb<>), typeof(MongoDb<>));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -84,7 +89,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.MapIdentityApi<ApplicationUser>();
+
+app.MapGroup("api/auth")
+    .MapIdentityApi<ApplicationUser>();
+
+app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 

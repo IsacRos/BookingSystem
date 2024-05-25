@@ -1,12 +1,12 @@
 ﻿using BookingSystem.Core.Entities;
-using Microsoft.Extensions.Options;
+using BookingSystem.Core.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
 namespace BookingSystem.Infrastructure.Data;
 
-public class MongoDb<TEntity> where TEntity : EntityBase
+public class MongoDb<TEntity> : IMongoDb<TEntity> where TEntity : EntityBase
 {
     private readonly IMongoCollection<TEntity> collection;
     public MongoDb(MongoConnection database)
@@ -20,13 +20,13 @@ public class MongoDb<TEntity> where TEntity : EntityBase
     }
     public async Task<IEnumerable<TEntity>> GetAll()
     {
-        var restaurants =  await collection.Find(_ => true).ToListAsync();
-        return restaurants;
+        var entities = await collection.Find(_ => true).ToListAsync();
+        return entities;
     }
     public async Task<TEntity> GetById(string id)
     {
-        var restaurant = await collection.Find(x => x.Id.ToString() == id).FirstOrDefaultAsync();
-        return restaurant; 
+        var entity = await collection.Find(x => x.Id.ToString() == id).FirstOrDefaultAsync();
+        return entity;
     }
     public async Task Update(TEntity entity)
     {
@@ -35,18 +35,23 @@ public class MongoDb<TEntity> where TEntity : EntityBase
     }
     public async Task Delete(string id)
     {
-        var restaurant = await collection.Find(x => x.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
-        if (restaurant != null)
+        var entity = await collection.Find(x => x.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
+        if (entity != null)
         {
-            await collection.DeleteOneAsync(x => x.Id == restaurant.Id);
+            await collection.DeleteOneAsync(x => x.Id == entity.Id);
         }
-        else throw new ArgumentException("Couldn't find restaurant to delete");
+        else throw new ArgumentException("Couldn't find entity to delete");
     }
-/*        public async Task<IList<TEntity>> SearchFor(string key, string value)
+    public async Task<IEnumerable<TEntity>> SearchFor<TField>(string fieldName, TField fieldValue)
     {
-        
-        var restaurants = await collection.Find(predicate).ToListAsync();
-        return restaurants;
+        var filter = Builders<TEntity>.Filter.Eq<TField>(fieldName, fieldValue);
+        var result = await collection.Find(filter).ToListAsync();
+        return result;
     }
-*/
+    public async Task<IEnumerable<TEntity>> SearchFor(Expression<Func<TEntity, bool>> predicate)
+    {
+        var queryable = collection.AsQueryable<TEntity>();
+        var result = await Task.Run(() => queryable.Where(predicate).ToList());
+        return result;
+    }
 }

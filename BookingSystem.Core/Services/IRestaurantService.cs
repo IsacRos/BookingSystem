@@ -1,14 +1,13 @@
-﻿using BookingSystem.Core.Entities;
-using BookingSystem.Core.DTOs;
-using MongoDB.Bson;
+﻿using BookingSystem.Core.DTOs;
 
-namespace BookingSystem.Infrastructure.Services;
+namespace BookingSystem.Core.Services;
 
 public interface IRestaurantService
 {
     Task AddRestaurant(RestaurantRequest request);
     Task<IEnumerable<RestaurantDto>> GetAllRestaurants();
+    Task<IEnumerable<RestaurantDto>> GetUserRestaurants();
     Task<RestaurantDto?> GetRestaurantById(string id);
-    Task UpdateRestaurant(RestaurantRequest updatedRestaurant, string id);
+    Task UpdateRestaurant(RestaurantRequest updatedRestaurant);
     Task DeleteRestaurant(string id);
 }

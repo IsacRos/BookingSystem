@@ -1,0 +1,7 @@
+﻿Your table has been booked.
+
+Thank you for using our service!
+
+If you want to cancel your booking, click here:
+
+http://localhost:4200/cancel/IdForSwap
