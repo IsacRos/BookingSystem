@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Amazon.Runtime.Internal.Util;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -21,12 +24,12 @@ public class EmailSender : IEmailSender
         await Execute(email, subject, htmlMessage);
     }
 
-    private async Task Execute(string email, string subject, string htmlMessage)
+    public async Task Execute(string email, string subject, string htmlMessage)
     {
-        var client = new SendGridClient(apiKey);
+    var client = new SendGridClient(apiKey);
         var msg = new SendGridMessage
         {
-            From = new EmailAddress("isac.a.rosenberg@gmail.com"),
+            From = new EmailAddress("isac.a.rosenberg@gmail.com", "Password recovery"),
             Subject = subject,
             PlainTextContent = htmlMessage,
             HtmlContent = htmlMessage
@@ -35,6 +38,6 @@ public class EmailSender : IEmailSender
 
         msg.SetClickTracking(false, false);
         var response = await client.SendEmailAsync(msg);
-
+        
     }
 }

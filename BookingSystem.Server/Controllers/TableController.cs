@@ -1,5 +1,6 @@
-﻿using BookingSystem.Core.DTOs;
-using BookingSystem.Core.Services;
+﻿using BookingSystem.Core.Classes;
+using BookingSystem.Core.DTOs;
+using BookingSystem.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingSystem.Server.Controllers
@@ -15,16 +16,16 @@ namespace BookingSystem.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TableDto>>> GetTables(string restaurantId)
+        public async Task<ActionResult<TablesDto>> GetTables(string RestaurantId)
         {
-            var tables = await _tableService.GetTables(restaurantId);
+            var tables = await _tableService.GetTables(RestaurantId);
             return Ok(tables);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddTable(TableRequest request)
+        [HttpPut]
+        public async Task<ActionResult> AddTable(string id, int capacity)
         {
-            await _tableService.AddTable(request.Id, request.Capacity);
+            await _tableService.AddTable(id, capacity);
             return Ok();
         }
         [HttpDelete]

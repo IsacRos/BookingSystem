@@ -8,10 +8,7 @@
 
   <ItemGroup>
 	<PackageReference Include="AspNetCore.Identity.MongoDbCore" Version="3.1.2" />
-	<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-	<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.5" />
 	<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
-	<PackageReference Include="SendGrid" Version="9.29.3" />
     <Compile Remove="Enums\Collections.cs" />
   </ItemGroup>
 

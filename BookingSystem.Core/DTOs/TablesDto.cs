@@ -1,4 +1,6 @@
-﻿namespace BookingSystem.Core.DTOs;
+﻿using BookingSystem.Core.Classes;
+
+namespace BookingSystem.Core.DTOs;
 
 public class TablesDto
 {

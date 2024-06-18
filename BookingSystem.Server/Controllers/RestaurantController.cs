@@ -1,8 +1,8 @@
-﻿using BookingSystem.Core.DTOs;
-using BookingSystem.Core.Entities;
-using BookingSystem.Core.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using BookingSystem.Core.Entities;
+using BookingSystem.Core.DTOs;
+using BookingSystem.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookingSystem.Server.Controllers
 {
@@ -17,36 +17,29 @@ namespace BookingSystem.Server.Controllers
             _restaurantService = restaurantInfoService;
         }
 
-        [HttpPost, Authorize]
+        [HttpPost]
         public async Task<ActionResult> Add(RestaurantRequest request)
         {
             await _restaurantService.AddRestaurant(request);
             return Ok();
         }
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAllRestaurants()
         {
             var restaurants = await _restaurantService.GetAllRestaurants();
             return Ok(restaurants);
         }
-        [HttpGet("UserRestaurants"), Authorize]
-        public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetUserRestaurants()
-        {
-            var restaurants = await _restaurantService.GetUserRestaurants();
-            return Ok(restaurants);
-        }
         [HttpGet("{id}")]
         public async Task<ActionResult<Restaurant>> GetById(string id)
         {
-
             var restaurants = await _restaurantService.GetRestaurantById(id);
             return Ok(restaurants);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(RestaurantRequest request)
+        public async Task<ActionResult> Update(RestaurantRequest request, string id)
         {
-            await _restaurantService.UpdateRestaurant(request);
+            await _restaurantService.UpdateRestaurant(request, id);
             return Ok();
         }
 

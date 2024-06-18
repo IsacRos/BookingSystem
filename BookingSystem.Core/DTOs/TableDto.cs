@@ -1,4 +1,4 @@
-﻿using BookingSystem.Core.Classes;
+﻿using MongoDB.Bson;
 
 namespace BookingSystem.Core.DTOs
 {
@@ -6,6 +6,5 @@ namespace BookingSystem.Core.DTOs
     {
         public required string Id { get; set; }
         public required int Capacity { get; set; }
-        public List<TableBookings> Bookings { get; set; } = new List<TableBookings>();
     }
 }

@@ -2,10 +2,10 @@
 {
     public class Address
     {
-        public required string AddressLine1 { get; set; }
-        public string? AddressLine2 { get; set; }
-        public string? AddressLine3 { get; set; }
-        public required string ZipCode { get; set; }
+        public required string Line1 { get; set; }
+        public string? Line2 { get; set; } 
+        public string? Line3 { get; set; } 
+        public required string PostalCode { get; set; }
         public required string City { get; set; }
         public required string Country { get; set; }
     }
