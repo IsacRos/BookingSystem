@@ -22,9 +22,9 @@ namespace BookingSystem.Server.Controllers
         {
             var activeBookings = await _bookingService.GetActiveBookingsByEmail(request.CustomerEmail);
             
-            if (activeBookings.Count() > 0)
+            if (activeBookings.Count() > 0 && activeBookings.Any(booking => booking.RestaurantId == request.RestaurantId && booking.BookingDate > DateTime.Now))
             {
-                return BadRequest("Oops, you already have an active booking");
+                return BadRequest("Oops, you already have an active booking in this restaurant");
             }
             var result = await _bookingService.BookTable(request);
             if (result) return Ok();

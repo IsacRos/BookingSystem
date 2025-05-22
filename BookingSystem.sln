@@ -8,9 +8,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingSystem.Server", "Boo
 		{41F00F0D-0004-4BDD-A4D3-2F7ED976860B} = {41F00F0D-0004-4BDD-A4D3-2F7ED976860B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.Core", "BookingSystem.Core\BookingSystem.Core.csproj", "{5ABDD6C1-7C0D-4E8E-BCE6-B5467E73AED4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingSystem.Core", "BookingSystem.Core\BookingSystem.Core.csproj", "{5ABDD6C1-7C0D-4E8E-BCE6-B5467E73AED4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.Infrastructure", "BookingSystem.Infrastructure\BookingSystem.Infrastructure.csproj", "{41F00F0D-0004-4BDD-A4D3-2F7ED976860B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookingSystem.Infrastructure", "BookingSystem.Infrastructure\BookingSystem.Infrastructure.csproj", "{41F00F0D-0004-4BDD-A4D3-2F7ED976860B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5ABDD6C1-7C0D-4E8E-BCE6-B5467E73AED4} = {5ABDD6C1-7C0D-4E8E-BCE6-B5467E73AED4}
 	EndProjectSection
